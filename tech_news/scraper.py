@@ -1,6 +1,18 @@
+import requests
+import time
+
+
 # Requisito 1
 def fetch(url):
-    """Seu códidddgo deve vir aqui"""
+    try:
+        response = requests.get(
+            url, headers={"user-agent": "Fake user-agent"}, timeout=3
+        )
+        time.sleep(1)
+    except requests.ReadTimeout:
+        return None
+    else:
+        return response.text if response.status_code == 200 else None
 
 
 # Requisito 2
@@ -21,3 +33,7 @@ def scrape_news(html_content):
 # Requisito 5
 def get_tech_news(amount):
     """Seu código deve vir aqui"""
+
+
+if __name__ == "__main__":
+    print(fetch("https://blog.betrybe.com/"))
