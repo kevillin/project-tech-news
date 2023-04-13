@@ -30,7 +30,8 @@ def scrape_updates(html_content):
 def scrape_next_page_link(html_content):
     selector = Selector(text=html_content)
     next_page = selector.css("a.next::attr(href)").get()
-
+    if not next_page:
+        return None
     return next_page
 
 
