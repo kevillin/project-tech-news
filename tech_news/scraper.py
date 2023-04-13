@@ -1,3 +1,4 @@
+from parsel import Selector
 import requests
 import time
 
@@ -17,7 +18,12 @@ def fetch(url):
 
 # Requisito 2
 def scrape_updates(html_content):
-    """Seu código deve vir aqui"""
+    selector = Selector(text=html_content)
+    updates = list()
+    for article in selector.css("article.entry-preview"):
+        url = article.css("a::attr(href)").get()
+        updates.append(url)
+    return updates
 
 
 # Requisito 3
@@ -36,4 +42,5 @@ def get_tech_news(amount):
 
 
 if __name__ == "__main__":
-    print(fetch("https://blog.betrybe.com/"))
+    scrape = fetch("https://blog.betrybe.com/")
+    print(scrape_updates(scrape))
